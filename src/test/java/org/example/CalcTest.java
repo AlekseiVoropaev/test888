@@ -4,26 +4,24 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CalcTest {
 
-    @BeforeAll
+    @BeforeAll // выполняется до всех тестов
     public static void setup() {
         System.out.println("BeforeAll");
     }
 
-    @BeforeEach
+    @BeforeEach // выполняется перед каждым тестом
     public  void setupEach(){
         System.out.println("Before Each");
     }
 
-    @AfterAll
+    @AfterAll //выполняется после всех тестов
     public static void afterAll(){
         System.out.println("After All");
     }
 
-    @AfterEach
+    @AfterEach // выполняется после каждого теста
     public  void afterEach(){
         System.out.println("After All");
     }
@@ -38,12 +36,12 @@ class CalcTest {
         Assertions.assertEquals(7, result , "Не тот ответ");
 
     }
-    //@RepeatedTest(10)
+   // @RepeatedTest(7)
     @Test
     @DisplayName("Проверка суммирования 2")
     @Timeout(10)
     void summ2() {
-        Calc calc = new Calc();
+      Calc calc = new Calc();
         int result = calc.summ(1, 6);
         Assertions.assertEquals(7, result, "Не тот ответ");
     }
@@ -58,4 +56,15 @@ class CalcTest {
         Assertions.assertEquals(expendedresult, result , "Не тот ответ");
 
     }
-}
+
+    @ParameterizedTest(name = " #{index} - вычитание {0} и {1}, ожидаем {2}")
+    @CsvSource({"1, 2, -1" , "-1, 2, -3", "0, 0, 0 "})
+    @DisplayName("Проверка вычитания")
+    @Tag("sub")
+    void sub(int a,  int b , int expendedresult) {
+        Calc calc = new Calc();
+        int result = calc.sub(a,b);
+        Assertions.assertEquals(expendedresult, result , "Не тот ответ");
+    }
+
+    }
